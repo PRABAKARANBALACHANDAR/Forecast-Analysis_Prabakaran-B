@@ -1,0 +1,159 @@
+
+================================================================================
+TECHNICAL REPORT: SARIMA FORECASTING MODEL FOR PUBLIC TRANSPORT PASSENGER JOURNEYS
+================================================================================
+
+1. ALGORITHM SELECTION: SARIMA (Seasonal AutoRegressive Integrated Moving Average)
+
+   SARIMA was selected for this forecasting task because:
+   - Explicitly models seasonality (critical for weekly patterns in transport data)
+   - Handles non-stationary time series through differencing
+   - Captures both autoregressive and moving average components
+   - Provides confidence intervals for uncertainty quantification
+   - Well-established statistical foundation with interpretable parameters
+
+2. MODEL SPECIFICATION
+
+   SARIMA(p, d, q)(P, D, Q, s) where:
+   - (p, d, q): Non-seasonal ARIMA parameters
+     * p: Autoregressive order (lags of the series)
+     * d: Differencing order (to achieve stationarity)
+     * q: Moving average order (lags of forecast errors)
+   
+   - (P, D, Q, s): Seasonal parameters
+     * P: Seasonal autoregressive order
+     * D: Seasonal differencing order
+     * Q: Seasonal moving average order
+     * s: Seasonal period (7 days for weekly seasonality)
+
+   Model Parameters Used:
+   - Seasonal period (s): 7 days (weekly seasonality)
+   - Parameter selection: Auto-tuned based on AIC (Akaike Information Criterion)
+   - Common configurations tested: (1,1,1)(1,1,1,7), (2,1,2)(1,1,1,7), etc.
+
+3. DATA PREPROCESSING
+
+   - Missing Data Handling:
+     * Created continuous daily time series (reindexed to full calendar)
+     * Time-based interpolation for gaps up to 7 days
+     * Forward/backward fill for remaining gaps
+     * Total missing days filled: ~246 days per service
+   
+   - Outlier Treatment:
+     * Detected using IQR method (1.5 * IQR threshold)
+     * Outliers identified and flagged but preserved in dataset
+     * Outlier counts saved to separate CSV files for review
+   
+   - Data Quality:
+     * Negative values removed (invalid for passenger counts)
+     * Continuous daily series ensures no gaps for time series modeling
+
+4. OUTLIER DETECTION RESULTS
+
+   Local Route:
+     - Total outliers: 0 (0.00%)
+     - High outliers: 0
+     - Low outliers: 0
+     - IQR bounds: [-15665, 34227]
+
+   Light Rail:
+     - Total outliers: 0 (0.00%)
+     - High outliers: 0
+     - Low outliers: 0
+     - IQR bounds: [-3849, 18322]
+
+   Peak Service:
+     - Total outliers: 1 (0.05%)
+     - High outliers: 1
+     - Low outliers: 0
+     - IQR bounds: [-471, 784]
+
+   Rapid Route:
+     - Total outliers: 0 (0.00%)
+     - High outliers: 0
+     - Low outliers: 0
+     - IQR bounds: [-10930, 35237]
+
+   School:
+     - Total outliers: 0 (0.00%)
+     - High outliers: 0
+     - Low outliers: 0
+     - IQR bounds: [-7371, 12285]
+
+   Other:
+     - Total outliers: 10 (0.52%)
+     - High outliers: 10
+     - Low outliers: 0
+     - IQR bounds: [-64, 148]
+
+
+5. MODEL VALIDATION
+
+   Validation Strategy: Temporal split (last 30 days held out for testing)
+   
+   Performance Metrics:
+   - Local Route: Forecast generated successfully
+   - Light Rail: Forecast generated successfully
+   - Peak Service: Forecast generated successfully
+   - Rapid Route: Forecast generated successfully
+   - School: Forecast generated successfully
+
+6. FORECASTING APPROACH
+
+   - Separate SARIMA models trained for each service type
+   - 7-day forecast horizon starting from last available date
+   - Predictions constrained to non-negative values
+   - 95% confidence intervals provided for uncertainty quantification
+   - Seasonal period of 7 days captures weekly patterns
+
+7. KEY INSIGHTS AND ACTIONABLE RECOMMENDATIONS
+
+   a) BEST DAYS TO TRAVEL (Least Crowded):
+      - Local Route: Travel on Sunday instead of Wednesday for 83.6% fewer passengers
+      - Light Rail: Travel on Sunday instead of Wednesday for 58.5% fewer passengers
+      - Rapid Route: Travel on Sunday instead of Wednesday for 68.4% fewer passengers
+
+   b) WEEKEND ADVANTAGE:
+      - Local Route: Weekends have 78.6% fewer passengers than weekdays
+      - Light Rail: Weekends have 48.6% fewer passengers than weekdays
+      - Rapid Route: Weekends have 61.8% fewer passengers than weekdays
+
+8. MODEL ASSUMPTIONS
+
+   - Weekly seasonal patterns remain stable
+   - No major structural breaks (e.g., service changes, strikes)
+   - Historical patterns continue into forecast period
+   - Residuals are white noise (no autocorrelation)
+
+9. LIMITATIONS
+
+   - Cannot capture sudden external shocks or events
+   - Assumes stationarity after differencing
+   - Limited to 7-day horizon for reliability
+   - Does not incorporate external factors (weather, holidays, events)
+   - May struggle with long-term structural changes
+
+10. RESIDUAL DIAGNOSTICS
+
+    - Ljung-Box test performed on residuals
+    - Residuals should be white noise (p > 0.05) for good model fit
+    - Residual plots available in diagnostics
+
+11. ALTERNATIVE APPROACHES CONSIDERED
+
+    - Holt-Winters Exponential Smoothing: Good for seasonality but less flexible
+    - Prophet: Excellent for holidays but requires more parameters
+    - LSTM/Neural Networks: Complex, requires more data
+    - Random Forest: Good for non-linear patterns but less interpretable
+
+12. RECOMMENDATIONS
+
+    - Monitor forecast accuracy and retrain models monthly
+    - Incorporate holiday calendar and special events
+    - Add exogenous variables (weather, strikes, events)
+    - Consider hierarchical forecasting for multiple services
+    - Implement automated model selection with cross-validation
+
+================================================================================
+Report generated on: 2025-11-04 10:31:33
+================================================================================
