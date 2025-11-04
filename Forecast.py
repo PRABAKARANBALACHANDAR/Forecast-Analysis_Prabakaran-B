@@ -393,7 +393,7 @@ def find_best_sarima_params(ts, seasonal_period=7, max_p=3, max_d=2, max_q=3,
     return best_params
 
 def forecast_sarima(series, forecast_periods=7, seasonal_period=7):
-        series = series.dropna()
+    series = series.dropna()
     
     if len(series) < 50:
         print(f"  Warning: Series too short ({len(series)}), using simple average")
