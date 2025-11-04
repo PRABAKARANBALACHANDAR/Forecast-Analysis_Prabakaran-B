@@ -21,13 +21,13 @@ This repository contains a complete forecasting pipeline for public transport pa
 
    Quick Start
 
-    Prerequisites
+  Prerequisites
 
 ```bash
 pip install pandas numpy matplotlib seaborn statsmodels scikit-learn jupyter
 ```
 
-    Running the Analysis
+  Running the Analysis
 
 1.   Open Jupyter Notebook  :
    ```bash
