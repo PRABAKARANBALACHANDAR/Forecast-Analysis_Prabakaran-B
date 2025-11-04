@@ -44,9 +44,9 @@ pip install pandas numpy matplotlib seaborn statsmodels scikit-learn jupyter
 
    Documentation
 
--   INSIGHTS_REPORT.md  : Key findings, patterns, and actionable recommendations
--   PROCEDURES.md  : Detailed methodology, assumptions, limitations, and procedures
--   Forecast_Analysis.ipynb  : Complete implementation with all code steps
+-   TECHNICAL_REPORT.md  : Key findings, patterns, and actionable recommendations
+-   README.md  : Detailed methodology, assumptions, limitations, and procedures
+-   Forecast.py  : Complete implementation with all code steps
 
    Key Features
 
