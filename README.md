@@ -8,15 +8,15 @@ This repository contains a complete forecasting pipeline for public transport pa
 
 ```
 .
-├── Forecast_Analysis.ipynb            Main Jupyter notebook with all implementation steps
-├── INSIGHTS_REPORT.md                  Key insights and actionable findings
-├── PROCEDURES.md                       Methodology, procedures, and technical details
-├── README.md                           This file
-├── Daily_Public_Transport_Passenger_Journeys_by_Service_Type_20250603.csv    Raw data
-├── cleaned_daily_by_service.csv       Cleaned time series data
-├── 7_day_forecast_sarima.csv          Complete 7-day forecast
-├── forecast_7days_ .csv                Individual service forecasts
-└──  .png                               Visualization outputs
+├── Forecast_Analysis.ipynb             -Main Jupyter notebook with all implementation steps
+├── INSIGHTS_REPORT.md                  -Key insights and actionable findings
+├── PROCEDURES.md                       -Methodology, procedures, and technical details
+├── README.md                           -This file
+├── Daily_Public_Transport_Passenger_Journeys_by_Service_Type_20250603.csv    -Raw data
+├── cleaned_daily_by_service.csv       -Cleaned time series data
+├── 7_day_forecast_sarima.csv          -Complete 7-day forecast
+├── forecast_7days_ .csv               -Individual service forecasts
+└──  .png                               -Visualization outputs
 ```
 
    Quick Start
